@@ -62,7 +62,7 @@
                         )}
                       </div>
                       <div className={usersDashboard.emailwrap}>
-                        <p>{user.email}</p>
+                        <p>{user.email} <br/> <b>Phone no.:</b>{user.phone_number} </p>
                       </div>
                     </div>
                     {user.role === 'user' && (

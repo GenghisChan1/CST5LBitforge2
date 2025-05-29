@@ -73,6 +73,7 @@
         > div {
           display: flex;
           justify-content: flex-start;
+          flex-wrap: wrap;
 
           > div {
             background-color: index.$quaternaryColor;

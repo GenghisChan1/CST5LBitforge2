@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'username'      => 'Bitforge',
-            'email'         => 'ComShop@gmail.com',
+            'email'         => 'Bitforge@gmail.com',
             'password'      => Hash::make('comshop123'),
             'phone_number' => '09123456789',
             'role'          => 'admin',

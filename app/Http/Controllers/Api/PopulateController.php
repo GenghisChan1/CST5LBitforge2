@@ -86,7 +86,7 @@ class PopulateController extends Controller
                 ->where('stocks', '>', 0)
                 ->orderBy('reviews_count', 'desc')
                 ->orderBy('id', 'desc')
-                ->take(4)
+                ->take(8)
                 ->get()
                 ->map(function ($item) {
                     return [
@@ -126,7 +126,7 @@ class PopulateController extends Controller
                 ->where('stocks', '>', 0)
                 ->orderBy('reviews_count', 'desc')
                 ->orderBy('id', 'desc')
-                ->take(4)
+                ->take(8)
                 ->get()
                 ->map(function ($item) {
                     return [

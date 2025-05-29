@@ -110,6 +110,19 @@ export default function GuestLayout() {
           </div>
         </div>
       )}
+       <footer>
+        <div className={guestlayout.upperfooter}>
+          <div>
+            <p><b>Email: </b>bitforge@gmail.com</p>
+          </div>
+          <div>
+            <p><b>Phone: </b>+1 234 567 890</p>
+          </div>
+        </div>
+        <div className={guestlayout.lowerfooter}>
+          <p>© 2025 BITFORGE. All rights reserved.</p>
+        </div> 
+      </footer>
     </div>
   )
 }
