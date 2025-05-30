@@ -128,6 +128,7 @@ export default function AdminDashboard(){
     try {
       const res = await axiosClient.delete(`/user/${userId}`);
       fetchUsers(sortUserBy, searchUsername); // Refresh list after deletion
+      fetchPendingOrders(searchPendingOrdersKeyword); // Refresh pending orders
       fetchAdminDetails();
       alert(res.data.message);
     } catch (err) {
