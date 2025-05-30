@@ -4,6 +4,7 @@ import axiosClient from '../../axiosClient';
 
 const GlobalContext = createContext({
   user: null,
+  userDetails: null,
   token: null,
   item: null,
   displayItems: null,
@@ -18,6 +19,7 @@ const GlobalContext = createContext({
   isSearch: false,
   amount: 0,
   setUser: () => {},
+  setUserDetails: () => {},
   setToken: () => {},
   setItem: () => {},
   setDisplayItems: () => {},
@@ -36,6 +38,11 @@ const GlobalContext = createContext({
 export function GlobalContextProvider({ children }){
   
   const [user, setUser] = useState({ role: 'guest'});
+  const [userDetails, setUserDetails] = useState({
+    cart_items_quantity: 0,
+    pending_items_quantity: 0,
+    item_purchased: 0
+  });
   const [token, _setToken] = useState(localStorage.getItem('ACCESS_TOKEN') || null);
   const [item, setItem] = useState({});
   const [displayItems, setDisplayItems] = useState([]);
@@ -529,6 +536,25 @@ export function GlobalContextProvider({ children }){
     }
   }
 
+  async function fetchUserDetails () {
+    try {
+      const res = await axiosClient.get('/user/further-details', {
+        params: {
+          id: user.id
+        }
+      });
+
+      setUserDetails(res.data.user);
+    } catch (error) {
+      console.error('Failed to fetch user details:', error.response?.data || error.message);
+    }
+  }
+
+  async function fetchUserInfo() {
+    await fetchUser();
+    await fetchUserDetails();
+  }
+
   async function fetchitems() {
     try {
       const [response1, response2, response3, response4] = await Promise.all([
@@ -562,7 +588,7 @@ export function GlobalContextProvider({ children }){
       axiosClient.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`; // Set Authorization header
 
       // Fetch user data after setting token
-      fetchUser(); 
+      fetchUserInfo();
     } else {
       setUser({ role: 'guest' }); // Set default user as guest if no token
     }
@@ -580,6 +606,7 @@ export function GlobalContextProvider({ children }){
   return (
     <GlobalContext.Provider value={{
       user,
+      userDetails,
       token, 
       item,
       displayItems,
@@ -595,6 +622,7 @@ export function GlobalContextProvider({ children }){
       amount,
 
       setUser,
+      setUserDetails,
       setToken,
       setItem,
       setDisplayItems,
@@ -610,7 +638,8 @@ export function GlobalContextProvider({ children }){
       setisSearch,
       setAmount,
 
-      fetchUser
+      fetchUser,
+      fetchUserDetails
     }}>
       {children}
     </GlobalContext.Provider>

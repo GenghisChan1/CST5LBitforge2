@@ -8,7 +8,12 @@ import axiosClient from "../../axiosClient";
 import cart from './cartItems.module.scss';
 
 export default function CartItems() {
-  const { user, setUser, setItem } = useGlobalContext();
+  const { 
+    user, 
+    setItem, 
+    fetchUserDetails
+  } = useGlobalContext();
+
   const navigate = useNavigate();
 
   const [localCart, setLocalCart] = useState(user.cart_items || []);
@@ -73,6 +78,7 @@ export default function CartItems() {
 
       // Update local state without refreshing entire user
       setLocalCart(prevCart => prevCart.filter(item => item.id !== cartId));
+      fetchUserDetails(); // Refresh user details to ensure cart is up-to-date
     } catch (error) {
       console.error("Error deleting cart item: ", error);
       alert(error?.response?.data?.message || "Error deleting item from cart");

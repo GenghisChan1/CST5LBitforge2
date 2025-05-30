@@ -10,7 +10,12 @@ import axiosClient from "../../axiosClient";
 import dashboard from './userDashboard.module.scss'
 
 export default function UserDashboard(){
-  const { user, setUser, setAmount, fetchUser} = useGlobalContext();
+  const { 
+    user, setUser, 
+    userDetails, setUserDetails,
+    setAmount, 
+    fetchUser, fetchUserDetails
+  } = useGlobalContext();
 
   const [file, setFile] = useState(null);
   const [editingField, setEditingField] = useState(null);
@@ -25,37 +30,18 @@ export default function UserDashboard(){
       postal_code: user.default_address?.postal_code || "",
     },
   });
-  const [userDetails, setUserDetails] = useState({
-    cart_items_quantity: 0,
-    pending_items_quantity: 0,
-    item_purchased: 0
-  });
 
   const fileInputRef = useRef(null);
   setAmount(0);
   
   async function RefreshUserDetails() {
     await fetchUser();
+    await fetchUserDetails();
   }
 
   useEffect(()=>{
     RefreshUserDetails();
-    fetchUserDetails()
   },[]);
-  
-  async function fetchUserDetails () {
-    try {
-      const res = await axiosClient.get('/user/further-details', {
-        params: {
-          id: user.id
-        }
-      });
-
-      setUserDetails(res.data.user);
-    } catch (error) {
-      console.error('Failed to fetch user details:', error.response?.data || error.message);
-    }
-  }
   
   // 📸 Auto-upload profile picture on file selection
   const handleFileChange = (e) => {
