@@ -111,6 +111,7 @@ export default function AdminDashboard(){
     try {
       await axiosClient.delete(`/items/${itemId}`);
       fetchItems(sortItemsBy, searchbyitems, searchItemsKeyword);
+      fetchPendingOrders(searchPendingOrdersKeyword);
       alert("Item deleted successfully!");
     } catch (err) {
       console.error(`Failed to delete item ${itemId}:`, err);
