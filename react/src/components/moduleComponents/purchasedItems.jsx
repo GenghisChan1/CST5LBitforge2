@@ -66,7 +66,7 @@ export default function PurchasedItems () {
             </div>
           </Link>
         ))
-      ):( <div className={purch.error}>no purchased items</div>)}
+      ):( <div className={purch.error}>No Purchased Items</div>)}
     </div>
   )
 }

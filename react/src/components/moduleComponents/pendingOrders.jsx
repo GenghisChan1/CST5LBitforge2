@@ -10,7 +10,7 @@ export default function PendingOrders() {
 
   return (
     <div className={pOrder.pOrderItems}>
-      {user.pending_orders ? (
+      {user.pending_orders.length > 0 ?  (
         user.pending_orders.map((pending, index) => (
           <div key={index}>
             <div>
@@ -34,7 +34,7 @@ export default function PendingOrders() {
             </div>
           </div>
         ))
-      ):( <div>No pending orders</div>)}
+      ):( <div className={pOrder.emptyOrder}>No pending orders</div>)}
     </div>
   )
 }
