@@ -536,25 +536,6 @@ export function GlobalContextProvider({ children }){
     }
   }
 
-  async function fetchUserDetails () {
-    try {
-      const res = await axiosClient.get('/user/further-details', {
-        params: {
-          id: user.id
-        }
-      });
-
-      setUserDetails(res.data.user);
-    } catch (error) {
-      console.error('Failed to fetch user details:', error.response?.data || error.message);
-    }
-  }
-
-  async function fetchUserInfo() {
-    await fetchUser();
-    await fetchUserDetails();
-  }
-
   async function fetchitems() {
     try {
       const [response1, response2, response3, response4] = await Promise.all([
@@ -588,7 +569,7 @@ export function GlobalContextProvider({ children }){
       axiosClient.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`; // Set Authorization header
 
       // Fetch user data after setting token
-      fetchUserInfo();
+      fetchUser(); 
     } else {
       setUser({ role: 'guest' }); // Set default user as guest if no token
     }
@@ -638,8 +619,7 @@ export function GlobalContextProvider({ children }){
       setisSearch,
       setAmount,
 
-      fetchUser,
-      fetchUserDetails
+      fetchUser
     }}>
       {children}
     </GlobalContext.Provider>

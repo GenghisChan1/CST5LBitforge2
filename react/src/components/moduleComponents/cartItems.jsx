@@ -11,7 +11,8 @@ export default function CartItems() {
   const { 
     user, 
     setItem, 
-    fetchUserDetails
+    userDetails,
+    setUserDetails, 
   } = useGlobalContext();
 
   const navigate = useNavigate();
@@ -32,6 +33,20 @@ export default function CartItems() {
     });
     setQuantities(initialQuantities);
   }, [localCart]);
+
+  async function fetchUserDetails () {
+    try {
+      const res = await axiosClient.get('/user/further-details', {
+        params: {
+          id: user.id
+        }
+      });
+
+      setUserDetails(res.data.user);
+    } catch (error) {
+      console.error('Failed to fetch user details:', error.response?.data || error.message);
+    }
+  }
 
   const toBuyHandler = async (e, quantity, item_id, cart_id) => {
     e.preventDefault();

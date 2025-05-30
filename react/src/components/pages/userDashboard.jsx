@@ -12,9 +12,9 @@ import dashboard from './userDashboard.module.scss'
 export default function UserDashboard(){
   const { 
     user, setUser, 
-    userDetails, setUserDetails,
     setAmount, 
-    fetchUser, fetchUserDetails
+    fetchUser,
+    userDetails, setUserDetails
   } = useGlobalContext();
 
   const [file, setFile] = useState(null);
@@ -36,12 +36,27 @@ export default function UserDashboard(){
   
   async function RefreshUserDetails() {
     await fetchUser();
-    await fetchUserDetails();
   }
 
   useEffect(()=>{
     RefreshUserDetails();
+    fetchUserDetails();
   },[]);
+  
+
+  async function fetchUserDetails () {
+    try {
+      const res = await axiosClient.get('/user/further-details', {
+        params: {
+          id: user.id
+        }
+      });
+
+      setUserDetails(res.data.user);
+    } catch (error) {
+      console.error('Failed to fetch user details:', error.response?.data || error.message);
+    }
+  }
   
   // 📸 Auto-upload profile picture on file selection
   const handleFileChange = (e) => {
