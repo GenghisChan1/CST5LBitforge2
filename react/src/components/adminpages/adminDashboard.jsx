@@ -50,6 +50,7 @@ export default function AdminDashboard(){
       alert(`Order confirmed! Delivered at: ${new Date(response.data.delivered_at).toLocaleString()}`);
       // Refresh data or update UI
       fetchAdminDetails();
+      fetchPendingOrders(searchPendingOrdersKeyword);
       
     } catch (error) {
       const errorMsg = error.response?.data?.message || 'Failed to confirm delivery';
