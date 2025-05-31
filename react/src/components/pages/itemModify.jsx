@@ -103,7 +103,29 @@ export default function AdminItemModify(){
       
     } catch (error) {
       console.error('Update failed:', error.response?.data || error.message);
-      // Handle error (show error message to user)
+      
+      if (error.response?.data?.errors) {
+        // Handle field-specific validation errors
+        const fieldErrors = error.response.data.errors;
+        let errorMessages = [];
+        
+        // Check each field for errors
+        if (fieldErrors.item_name) errorMessages.push(`Item Name: ${fieldErrors.item_name.join(' ')}`);
+        if (fieldErrors.tags) errorMessages.push(`Tags: ${fieldErrors.tags.join(' ')}`);
+        if (fieldErrors.warehouse) errorMessages.push(`Warehouse: ${fieldErrors.warehouse.join(' ')}`);
+        if (fieldErrors.price) errorMessages.push(`Price: ${fieldErrors.price.join(' ')}`);
+        if (fieldErrors.stocks) errorMessages.push(`Stocks: ${fieldErrors.stocks.join(' ')}`);
+        if (fieldErrors.image) errorMessages.push(`Image: ${fieldErrors.image.join(' ')}`);
+        
+        if (errorMessages.length > 0) {
+          alert(`Failed to update item:\n${errorMessages.join('\n')}`);
+        } else {
+          alert('Failed to update item. Please check your inputs.');
+        }
+      } else {
+        // Handle non-validation errors
+        alert(`Failed to update item. ${error.response?.data?.message || error.message}.`);
+      }
     }
   };
 
@@ -155,7 +177,7 @@ export default function AdminItemModify(){
                     <td className={itemwrap.label}><div><p>Price: </p></div></td>
                     <td className={itemwrap.inputwrap}>
                       <div>
-                        <div><input type="number" name="price" id="" defaultValue={item.price} required/></div>
+                        <div><input type="number" name="price" id="" defaultValue={item.price} step="any" min={0} required/></div>
                       </div>
                     </td>
                   </tr>

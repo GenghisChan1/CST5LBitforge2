@@ -85,14 +85,36 @@ export default function AdminCreateItems(){
 
     // Validate required fields
     const newErrors = {};
-    if (!file) newErrors.image = ['An image is required'];
-    if (!formData.item_name) newErrors.item_name = ['Item name is required'];
-    if (!formData.price || isNaN(formData.price)) newErrors.price = ['Valid price is required'];
-    if (!formData.warehouse) newErrors.warehouse = ['Warehouse is required'];
-    if (!formData.stocks || !Number.isInteger(Number(formData.stocks))) newErrors.stocks = ['Valid stock quantity is required'];
-    
-    // Validate tags format if provided
-    if (formData.tags && !/^([a-z0-9\-]+( [a-z0-9\-]+)*)(,([a-z0-9\-]+( [a-z0-9\-]+)*))*$/i.test(formData.tags)) {
+    if (!file) {
+      alert('An image is required');
+      newErrors.image = ['An image is required'];
+    }
+
+    if (!formData.item_name) {
+      alert('Item name is required');
+      newErrors.item_name = ['Item name is required'];
+    }
+
+    if (!formData.price || isNaN(formData.price)) {
+      alert('Valid price is required');
+      newErrors.price = ['Valid price is required'];
+    }
+
+    if (!formData.warehouse) {
+      alert('Warehouse is required');
+      newErrors.warehouse = ['Warehouse is required'];
+    }
+
+    if (!formData.stocks || !Number.isInteger(Number(formData.stocks))) {
+      alert('Valid stock quantity is required');
+      newErrors.stocks = ['Valid stock quantity is required'];
+    }
+
+    if (
+      formData.tags &&
+      !/^([a-z0-9\-]+( [a-z0-9\-]+)*)(,([a-z0-9\-]+( [a-z0-9\-]+)*))*$/i.test(formData.tags)
+    ) {
+      alert('Tags must be comma-separated words with only letters and numbers');
       newErrors.tags = ['Tags must be comma-separated words with only letters and numbers'];
     }
 
@@ -288,7 +310,6 @@ export default function AdminCreateItems(){
                     Select File
                   </button>
                 )}
-                {errors?.image && <div className={itemwrap.error}>{errors.image[0]}</div>}
               </div>
             </div>
             <div className={itemwrap.right}>
@@ -306,7 +327,6 @@ export default function AdminCreateItems(){
                             onChange={handleChange}
                             required
                           />
-                          {errors?.item_name && <div className={itemwrap.error}>{errors.item_name[0]}</div>}
                         </div>
                       </div>
                     </td>
@@ -321,9 +341,10 @@ export default function AdminCreateItems(){
                             name="price" 
                             value={formData.price}
                             onChange={handleChange}
+                            step='any'
+                            min={0}
                             required
                           />
-                          {errors?.price && <div className={itemwrap.error}>{errors.price[0]}</div>}
                         </div>
                       </div>
                     </td>
@@ -340,7 +361,6 @@ export default function AdminCreateItems(){
                             onChange={handleChange}
                             required
                           />
-                          {errors?.warehouse && <div className={itemwrap.error}>{errors.warehouse[0]}</div>}
                         </div>
                       </div>
                     </td>
@@ -355,9 +375,9 @@ export default function AdminCreateItems(){
                             name="stocks" 
                             value={formData.stocks}
                             onChange={handleChange}
+                            min={1}
                             required
                           />
-                          {errors?.stocks && <div className={itemwrap.error}>{errors.stocks[0]}</div>}
                         </div>
                       </div>
                     </td>
