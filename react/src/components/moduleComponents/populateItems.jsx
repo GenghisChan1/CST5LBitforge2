@@ -6,8 +6,10 @@ export default function PopulateItems({ item }) {
       <img src={`${import.meta.env.VITE_API_BASE_URL}${item.image_url}`} alt={item.item_name}/>
       <div>
         <h4> {item.item_name} </h4>
-        <p> rating: {item.rating} </p>
-        <p> Stocks: {item.stocks} </p>
+        <div className={populateItems.itemDetails}> 
+          <div className={populateItems.rating}><p> rating: {item.rating} </p></div>
+          <div className={populateItems.stocks}><p> Stocks: {item.stocks} </p></div>
+        </div>
       </div>
     </div>
   );

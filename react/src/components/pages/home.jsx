@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
+import axiosClient from '../../axiosClient';
 import PopulateItems from '../moduleComponents/populateItems';
 import { useGlobalContext } from '../context/globalContextProvider';
 
@@ -8,13 +10,42 @@ import home from'./home.module.scss';
 export default function Home() {
   const { 
     setAmount,
-    displayTopPreBuildDesktop,
-    displayTopgamingLaptop,
-    displayTopgamingDesktop,
-    displayTopgamingAccessories,
+    displayTopPreBuildDesktop, setDisplayTopPreBuildDesktop,
+    displayTopgamingLaptop, setDisplayTopgamingLaptop,
+    displayTopgamingDesktop, setDisplayTopgamingDesktop,
+    displayTopgamingAccessories, setDisplayTopgamingAccessories
   } = useGlobalContext();
 
   setAmount(0);
+
+  async function fetchitems() {
+    try {
+      const [response1, response2, response3, response4] = await Promise.all([
+        axiosClient.get('/populate-top-pre-build-desktops'),
+        axiosClient.get('/populate-top-items', {
+          params: { query1: 'gaming', query2: 'laptop' }
+        }),
+        axiosClient.get('/populate-top-items', {
+          params: { query1: 'gaming', query2: 'desktop' }
+        }),
+        axiosClient.get('/populate-top-items', {
+          params: { query1: 'gaming', query2: 'accessories' }
+        })
+      ]);
+
+      setDisplayTopPreBuildDesktop(response1.data.data);
+      setDisplayTopgamingLaptop(response2.data.data);
+      setDisplayTopgamingDesktop(response3.data.data);
+      setDisplayTopgamingAccessories(response4.data.data);
+
+    } catch (error) {
+      console.error('Failed to fetch items:', error.response?.data || error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchitems();
+  }, []);
 
   return (
     <div className={home.home}>

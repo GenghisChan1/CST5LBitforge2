@@ -536,30 +536,30 @@ export function GlobalContextProvider({ children }){
     }
   }
 
-  async function fetchitems() {
-    try {
-      const [response1, response2, response3, response4] = await Promise.all([
-        axiosClient.get('/populate-top-pre-build-desktops'),
-        axiosClient.get('/populate-top-items', {
-          params: { query1: 'gaming', query2: 'laptop' }
-        }),
-        axiosClient.get('/populate-top-items', {
-          params: { query1: 'gaming', query2: 'desktop' }
-        }),
-        axiosClient.get('/populate-top-items', {
-          params: { query1: 'gaming', query2: 'accessories' }
-        })
-      ]);
+  //async function fetchitems() {
+  //  try {
+  //    const [response1, response2, response3, response4] = await Promise.all([
+  //      axiosClient.get('/populate-top-pre-build-desktops'),
+  //      axiosClient.get('/populate-top-items', {
+  //        params: { query1: 'gaming', query2: 'laptop' }
+  //      }),
+  //      axiosClient.get('/populate-top-items', {
+  //        params: { query1: 'gaming', query2: 'desktop' }
+  //      }),
+  //      axiosClient.get('/populate-top-items', {
+  //        params: { query1: 'gaming', query2: 'accessories' }
+  //      })
+  //     ]);
 
-      setDisplayTopPreBuildDesktop(response1.data.data);
-      setDisplayTopgamingLaptop(response2.data.data);
-      setDisplayTopgamingDesktop(response3.data.data);
-      setDisplayTopgamingAccessories(response4.data.data);
+  //    setDisplayTopPreBuildDesktop(response1.data.data);
+  //    setDisplayTopgamingLaptop(response2.data.data);
+  //    setDisplayTopgamingDesktop(response3.data.data);
+  //    setDisplayTopgamingAccessories(response4.data.data);
 
-    } catch (error) {
-      console.error('Failed to fetch items:', error.response?.data || error.message);
-    }
-  };
+  //  } catch (error) {
+  //    console.error('Failed to fetch items:', error.response?.data || error.message);
+  //  }
+  //};
 
   useEffect(() => {
     const storedToken = localStorage.getItem('ACCESS_TOKEN'); // Retrieve token from localStorage
@@ -579,7 +579,7 @@ export function GlobalContextProvider({ children }){
     setAdnminDetails(tmpadminDetails);
     //setDisplayTopPreBuildDesktop(tmpItem);
     //setDisplayUsers(tmpDisplayUsers);
-    fetchitems();
+    //fetchitems();
   }, []);
 
   console.log(user?.role, `search: ${isSearch}`);
