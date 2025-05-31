@@ -124,7 +124,7 @@ export default function AdminItemModify(){
         }
       } else {
         // Handle non-validation errors
-        alert(`Failed to update item. ${error.response?.data?.message || error.message}.`);
+        console.error(`Failed to update item. ${error.response?.data?.message || error.message}.`);
       }
     }
   };
