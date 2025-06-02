@@ -99,7 +99,7 @@ export default function AdminLayout() {
           </div>
           <div className={adminlayout.body}>
           {displayItems.map((item, index) => (
-            <Link to={`item/${item.item_id}`} key={index}
+            <Link to={`../item/${item.item_id}`} key={index}
             style={{ textDecoration: 'none'}} 
             onClick={(e)=>{setisSearch(false)}} 
             >
