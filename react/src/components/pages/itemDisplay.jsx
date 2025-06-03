@@ -330,6 +330,7 @@ export default function ItemDisplay() {
                 </div>
               </div>
               <div className={itemDisplay.stocks}><p><b>Stocks:</b> {item.stocks}</p></div>
+              <div className={itemDisplay.stocks}><p><b>Warehouse:</b> {item.warehouse}</p></div>
               <div className={`${showFullDetails ? itemDisplay.expand : itemDisplay.collapse}`}>
               {specSections.map(section => {
                 const data = specs[section.key];
