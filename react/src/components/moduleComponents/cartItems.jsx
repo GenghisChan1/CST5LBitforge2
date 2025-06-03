@@ -141,7 +141,9 @@ export default function CartItems() {
               </div>
               <div className={cart.right}>
                 <div>
-                  <p>Grand Total: PHP {item.grand_total}</p>
+                  <p>
+                    Grand Total: PHP {((quantities[item.id] || 1) * item.unit_price).toFixed(2)}
+                  </p>
                 </div>
                 <button
                   onClick={(e) =>
